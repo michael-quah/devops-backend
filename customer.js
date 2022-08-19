@@ -5,6 +5,16 @@ const express = require("express");
 // Allows us to define a mapping from the URI to a function
 router = express.Router();
 
+router.get("/", (request, response) => {
+  database.connection.all("select * from customer", (errors, results) => {
+    if (errors) {
+      response.status(500).send("Some error occurred");
+    } else {
+      response.status(200).send(results);
+    }
+  });
+});
+
 // can be used to define a GET API.   URI -> CB function.
 router.get("/customer/all", (request, response) => {
   database.connection.all("select * from customer", (errors, results) => {
